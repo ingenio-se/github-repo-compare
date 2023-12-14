@@ -1,5 +1,5 @@
 .search-interface {
-    position: fixed; /* Fixed position */
+position: fixed; /* Fixed position */
   top: 0; /* Start at the top of the screen */
   right: 0; /* Align to the right */
   height: 100vh; /* Full viewport height */
@@ -12,6 +12,7 @@
   }
   
   .search-box {
+    position: relative; 
     margin: 20px;
     display: flex;
     flex-direction: row;
@@ -78,4 +79,40 @@
     color: #8383AF; /* Set the color of the icon */
     stroke-width: 1.5; /* Adjust the stroke width as needed */
   }
+  .suggestions-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top:50px;
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ddd; /* Light grey border */
+    border-top: none; /* Remove border from the top edge */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    border-radius: 0 0 4px 4px; /* Rounded corners on the bottom */
+    max-height: 300px; /* Limit the height of the dropdown */
+    overflow-y: auto; /* Enable scrolling for overflow */
+    z-index: 5; /* Ensure the list appears above other content */
+  }
   
+  /* Add styles for each suggestion item */
+  .suggestion-item {
+    padding: 10px 15px;
+    /*border-bottom: 1px solid #ddd; /* Light grey border between items */
+    cursor: pointer; /* Pointer to indicate clickable items */
+    color:#8383AF;
+  }
+  
+  .suggestion-item:last-child {
+    border-bottom: none; /* Remove border from the last item */
+  }
+  /* Styles for selected repositories */
+
+  
+  
+  .selected-repo {
+    padding: 10px;
+    margin: 10px 0;
+    border-left: 4px solid; /* Use a solid color for the border */
+    /* Add other styles here */
+  }
