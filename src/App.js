@@ -10,14 +10,26 @@ function App() {
 
   // Dummy data for RepoGraph
   const commitData = {
-    labels: ['Week 1', 'Week 2', 'Week 3'], // This should be dynamic based on actual data
+    /*labels: ['Week 1', 'Week 2', 'Week 3'], // This should be dynamic based on actual data
     datasets: [
       {
         label: 'Repo 1',
         data: [10, 20, 30],
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'white', // Change the color to white
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
       }
+    ]*/
+    labels: ['Week 1', 'Week 2', 'Week 3'], // This should be dynamic based on actual data
+    datasets: [
+      {
+        label: 'Repo 1',
+        data: [10, 20, 30], // Array of commit counts for each week
+        borderColor: 'black', // Change the color to white
+        backgroundColor: 'rgba(255, 255, 255, 0.5)', // Optional: Set background color to a semi-transparent white if you want
+        pointBackgroundColor: 'white', // Points color to white
+        pointBorderColor: 'white', // Points border color to white
+      }
+      // ... more datasets for each repo
     ]
   };
 
@@ -32,10 +44,13 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="app-container">
+      <div className="graph-container">
+        <RepoGraph commitData={commitData} />
+      </div>
+      
       <SearchBar onSearch={handleSearch} />
-      <RepoGraph commitData={commitData} />
-      <RepoList repos={repos} onRemoveRepo={handleRemoveRepo} />
+      
     </div>
   );
 }

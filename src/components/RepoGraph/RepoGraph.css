@@ -1,5 +1,13 @@
 .repo-graph {
-    width: 80%;
-    margin: 20px auto;
+  position: fixed; /* Fixed position */
+  top: 0; /* Start at the top of the screen */
+  left: 0; /* Align to the right */
+  height: 100vh; /* Full viewport height */
+  width: 70%; /* 30% of the viewport width */
+  background-color: white; /* Assuming a dark background as in the image */
+  color: black;
+  font-family: 'Arial', sans-serif;
+  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2); /* Shadow to the left */
+  z-index: 1000; /* Ensure it's above other content */
   }
   
