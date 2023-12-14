@@ -1,0 +1,31 @@
+.button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  /* You can define additional styles for different button types if needed */
+  .button.primary {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .button.primary:hover {
+    background-color: #0069d9;
+  }
+  
+  .button.danger {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .button.danger:hover {
+    background-color: #c82333;
+  }
+  
+  /* ... other styles for different button types */
+  

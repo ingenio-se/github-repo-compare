@@ -1,0 +1,27 @@
+.search-bar {
+    margin: 20px;
+    text-align: center;
+  }
+  
+  .search-input {
+    padding: 10px;
+    margin-right: -3px; /* Adjust based on your styling to make it look seamless with the button */
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    width: 70%;
+    font-size: 16px;
+  }
+  
+  .search-button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #eee;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    font-size: 16px;
+  }
+  
+  .search-button:hover {
+    background-color: #ddd;
+  }
+  
