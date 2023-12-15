@@ -47,12 +47,12 @@ const handleSuggestionClick = async (repo) => {
     try {
         const commitActivity = await fetchCommitActivity(repo.full_name);
         // Assuming commitActivity is an array of 52 weeks of activity
-        const repoWithCommitData = {
+        const repoWithColor = {
           ...repo,
           commitActivity,
           color: generateRandomColor() // Add a random color
         };
-        setSelectedRepos([...selectedRepos, repoWithCommitData]);
+        setSelectedRepos(prevRepos => [...selectedRepos, repoWithColor]);
       } catch (error) {
         console.error("Error fetching commit activity:", error);
       }
@@ -132,7 +132,7 @@ const handleSuggestionClick = async (repo) => {
             <button className="remove-repo-button" onClick={() => handleRemoveRepo(repo.id)}>
             <Trash size={16} />
             </button>
-            <RepoGraph repo={repo} /> {/* Pass the repo as a prop to the RepoGraph component */}
+            <RepoGraph selectedRepos={selectedRepos} />{/* Pass the repo as a prop to the RepoGraph component */}
           </div>
         ))}
       </div>
