@@ -11,19 +11,26 @@ const RepoGraph = ({ repo }) => {
   });
 
   useEffect(() => {
-    // Fetch commit activity from GitHub API
     const getCommitActivity = async () => {
-      const activity = await fetchCommitActivity(repo.full_name);
-      // Process the data to fit the chart's data structure
-      const processedData = processCommitData(activity);
-      setCommitData(processedData);
+      try {
+        const activity = await fetchCommitActivity(repo.full_name);
+        console.log(activity);
+        const processedData = processCommitData(activity,repo);
+        setCommitData(processedData);
+      } catch (error) {
+        console.error("Error fetching commit data:", error);
+        // Handle error appropriately
+      }
     };
-
-    getCommitActivity();
-  }, [repo]);
+  
+    if (repo.full_name) {
+      getCommitActivity();
+    }
+  }, [repo.full_name]); // Only re-run the effect if repo.full_name changes
+  
 
   // Function to process the GitHub commit activity into chart data
-  const processCommitData = (activity) => {
+  /*const processCommitData = (activity) => {
     // Example processing function, you'll need to write the actual logic based on the API's response
     const labels = activity.map((week, index) => `Week ${index + 1}`);
     const commitCounts = activity.map(week => week.total);
@@ -39,7 +46,7 @@ const RepoGraph = ({ repo }) => {
       }]
     };
   };
-
+*/
   // Options for the chart
   const options = {
     responsive: true,
@@ -80,6 +87,22 @@ const RepoGraph = ({ repo }) => {
        <Line data={commitData} options={options} />
     </div>
   );
+};
+
+const processCommitData = (commitActivity,repo) => {
+  const labels = commitActivity.map((_, index) => `Week ${index + 1}`);
+  const data = commitActivity.map(week => week.total);
+
+  return {
+    labels,
+    datasets: [{
+      label: repo.fullname,
+      data: data,
+      fill: false,
+      borderColor: repo.color,
+      tension: 0.1
+    }]
+  };
 };
 
 export default RepoGraph;

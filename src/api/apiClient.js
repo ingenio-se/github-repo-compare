@@ -15,6 +15,19 @@ export const searchRepositories = async (searchTerm) => {
   return response.json();
 };
 
+export const fetchCommitActivity = async (fullName) => {
+    const oneYearAgo = new Date();
+    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+    const response = await fetch(`https://api.github.com/repos/${fullName}/stats/commit_activity`, { headers });
+    
+    if (!response.ok) {
+      throw new Error('GitHub API responded with an error: ' + response.statusText);
+    }
+  
+    const commitActivity = await response.json();
+    return commitActivity; // This will return an array of commit activity for the last year
+  };
+/*
 export const getCommitActivity = async (owner, repo) => {
   const response = await fetch(`${API_BASE_URL}/repos/${owner}/${repo}/stats/commit_activity`, { headers });
   if (!response.ok) {
@@ -32,7 +45,8 @@ export const fetchCommitActivity = async (fullName) => {
         `${API_BASE_URL}/repos/${fullName}/commits?since=${oneYearAgo.toISOString()}`,
         {
           headers: {
-            Accept: 'application/vnd.github.v3+json',
+            'Authorization': `token ${GITHUB_TOKEN}`,
+            'Accept': 'application/vnd.github.v3+json',
           },
         }
       );
@@ -42,6 +56,7 @@ export const fetchCommitActivity = async (fullName) => {
       }
   
       const commits = await response.json();
+     
       return processCommits(commits);
     } catch (error) {
       console.error('Error fetching commit activity:', error);
@@ -78,3 +93,4 @@ export const fetchCommitActivity = async (fullName) => {
     weekStart.setDate(weekStart.getDate() - weekStart.getDay());
     return weekStart.toISOString().split('T')[0]; // Return date string in YYYY-MM-DD format
   };
+  */

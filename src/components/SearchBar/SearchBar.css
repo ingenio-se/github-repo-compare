@@ -109,10 +109,71 @@ position: fixed; /* Fixed position */
   /* Styles for selected repositories */
 
   
+  .selected-repos {
+    margin-top: 20px; /* Add some space above the list */
+  }
   
+  /* Styles for each selected repository */
   .selected-repo {
-    padding: 10px;
-    margin: 10px 0;
-    border-left: 4px solid; /* Use a solid color for the border */
-    /* Add other styles here */
+    background: #2d2d2d; /* Dark background */
+    margin-bottom: 10px; /* Space between repo items */
+    padding: 10px; /* Padding inside the repo item */
+    border-left: 4px solid; /* Colored border on the left */
+    border-radius: 4px; /* Rounded corners */
+    color: white; /* White text color */
+    font-size: 0.9rem; /* Smaller font size */
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center items vertically */
+    justify-content: space-between; /* Space out the name and the graph */
+    position: relative;
+    margin: 20px;
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack children vertically */
+    gap: 5px;
+    transition: background-color 0.3s; 
+  }
+  .selected-repo .repo-details {
+    display: flex;
+    flex-direction: column; /* Stack name and stars/info on top of each other */
+    gap: 5px; /* Space between name and stars/info */
+  }
+  .selected-repo:hover {
+    background-color: #3d3d3d; /* Slightly lighter background on hover */
+  }
+  
+  /* Style for the repository name and details */
+  .selected-repo span {
+    display: block; /* Make the span fill the line */
+    margin-right: 10px; /* Space between the text and the graph */
+  }
+  .repo-stars {
+    font-size: 0.8rem; /* Smaller font size */
+    color: #888; /* Example color - choose what fits your design */
+    display: flex;
+    align-items: center; /* Center the star icon and text vertically */
+  }
+  .remove-repo-button {
+    position: absolute;
+  top: 50%;
+  right: 10px; /* Position the button to the right */
+  transform: translateY(-50%); /* Center the button vertically */
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+  display: flex; /* Ensure the button uses flexbox for centering */
+  align-items: center; /* Center the icon vertically */
+  justify-content: center; /* Center the icon horizontally */
+  }
+  
+  /* Hide the button until the repo is hovered */
+  .remove-repo-button {
+    display: none;
+  }
+  
+  .selected-repo:hover .remove-repo-button {
+    display: flex; /* Show the button on hover */
+  }
+  .remove-repo-button svg {
+    z-index: 2;
   }

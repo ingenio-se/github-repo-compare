@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './SearchBar.css';
 import { Search as SearchIcon } from 'react-feather';
+import { Trash } from 'react-feather';
 import { searchRepositories } from '../../api/apiClient';
+import { fetchCommitActivity } from '../../api/apiClient';
 import RepoGraph from '../RepoGraph/RepoGraph'; 
+import { formatDistanceToNow, parseISO } from 'date-fns';
+
+const formatTimeAgo = (dateString) => {
+    return formatDistanceToNow(parseISO(dateString), { addSuffix: true });
+  };
 
 const SearchBar = () => {
   const [inputValue, setInputValue] = useState('');
@@ -27,13 +34,33 @@ const SearchBar = () => {
         setSuggestions([]); // Clear suggestions if searchTerm is too short
     }
 };
- // Handler for when a suggestion is clicked
- const handleSuggestionClick = (repo) => {
-    // Check if the repo is already selected
-    if (!selectedRepos.find((selectedRepo) => selectedRepo.id === repo.id)) {
-      setSelectedRepos([...selectedRepos, repo]);
-    }
-  };
+ 
+// Function to generate a random color in hexadecimal format
+const generateRandomColor = () => {
+  return '#' + Math.floor(Math.random() * 16777215).toString(16).padEnd(6, '0');
+};
+
+// Handler for when a suggestion is clicked
+const handleSuggestionClick = async (repo) => {
+  // Check if the repo is already selected
+  if (!selectedRepos.find((selectedRepo) => selectedRepo.id === repo.id)) {
+    try {
+        const commitActivity = await fetchCommitActivity(repo.full_name);
+        // Assuming commitActivity is an array of 52 weeks of activity
+        const repoWithCommitData = {
+          ...repo,
+          commitActivity,
+          color: generateRandomColor() // Add a random color
+        };
+        setSelectedRepos([...selectedRepos, repoWithCommitData]);
+      } catch (error) {
+        console.error("Error fetching commit activity:", error);
+      }
+  }
+  // Clear the suggestions to hide the list
+  setSuggestions([]);
+  setInputValue(''); // Optionally clear the input
+};
   // Function to handle search and fetch data
   const handleSearch = async (searchTerm) => {
     try {
@@ -60,7 +87,9 @@ const SearchBar = () => {
       </>
     );
   };
-  
+  const handleRemoveRepo = (repoId) => {
+    setSelectedRepos(selectedRepos.filter(repo => repo.id !== repoId));
+  };
   return (
     <div className="search-interface">
       <form onSubmit={handleSubmit}>
@@ -85,14 +114,24 @@ const SearchBar = () => {
         </div>
 
       </form>
-      <p className="search-prompt">
-        <SearchIcon className="search-icon" />
-        Search for a GitHub repository to populate graph
-    </p>
+      {selectedRepos.length === 0 && (
+        <p className="search-prompt">
+          <SearchIcon className="search-icon" />
+          Search for a GitHub repository to populate graph
+        </p>
+      )}
     <div className="selected-repos">
         {selectedRepos.map((repo, index) => (
           <div key={index} className="selected-repo" style={{ borderLeft: `4px solid ${repo.color}` }}>
-            <span>{repo.full_name}</span>
+             <div className="repo-details">
+                <span>{renderSuggestionItem(repo.full_name)}</span>
+                <span className="repo-stars">
+                ⭐ {repo.stargazers_count} Updated {formatTimeAgo(repo.updated_at)}
+                </span>
+            </div>
+            <button className="remove-repo-button" onClick={() => handleRemoveRepo(repo.id)}>
+            <Trash size={16} />
+            </button>
             <RepoGraph repo={repo} /> {/* Pass the repo as a prop to the RepoGraph component */}
           </div>
         ))}
