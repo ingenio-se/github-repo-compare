@@ -96,6 +96,13 @@ const handleSuggestionClick = async (repo) => {
   const handleRemoveRepo = (repoId) => {
     setSelectedRepos(selectedRepos.filter(repo => repo.id !== repoId));
   };
+  function formatStars(count) {
+    if (count < 1000) {
+      return count.toString(); // Return the original number if it's less than 1000
+    } else {
+      return (count / 1000).toFixed(1) + 'k'; // Format to one decimal place and append 'K'
+    }
+  }
   return (
     <div className="search-interface">
       <form onSubmit={handleSubmit}>
@@ -132,7 +139,7 @@ const handleSuggestionClick = async (repo) => {
              <div className="repo-details">
                 <span>{renderSuggestionItem(repo.full_name)}</span>
                 <span className="repo-stars">
-                ⭐ {repo.stargazers_count} Updated {formatTimeAgo(repo.updated_at)} - 
+                ⭐ {formatStars(repo.stargazers_count)} Updated {formatTimeAgo(repo.updated_at)} 
       
                 </span>
                 {repo.sentiment > 0 ? '😊' : repo.sentiment < 0 ? '😟' : '😐'}

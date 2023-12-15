@@ -1,5 +1,6 @@
-const GOOGLE_CLOUD_API_KEY = 'AIzaSyCyWHw9nLQV1wJxL3nwktbCnZ_ZQmKb4HU'
-console.log("Google Token:", GOOGLE_CLOUD_API_KEY);
+//const GOOGLE_CLOUD_API_KEY = 'AIzaSyCyWHw9nLQV1wJxL3nwktbCnZ_ZQmKb4HU'
+const GOOGLE_CLOUD_API_KEY = process.env.REACT_APP_GOOGLE_CLOUD_API_KEY;
+//console.log("Google Token:", GOOGLE_CLOUD_API_KEY);
 // Function to analyze sentiment of a text
 export const analyzeSentiment = async (text) => {
   try {

@@ -1,6 +1,6 @@
 const API_BASE_URL = 'https://api.github.com';
 const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
-console.log("GitHub Token:", GITHUB_TOKEN);
+//console.log("GitHub Token:", GITHUB_TOKEN);
 
 const headers = {
   'Authorization': `token ${GITHUB_TOKEN}`,

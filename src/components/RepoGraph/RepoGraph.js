@@ -28,19 +28,36 @@ const RepoGraph = ({ selectedRepos }) => {
     const updateChartData = async () => {
       const newDatasets = [];
       for (const repo of selectedRepos) {
-        const commitActivity = await fetchCommitActivity(repo.full_name);
-        console.log(commitActivity);
-        const newDataset = processCommitData(commitActivity, repo);
-        newDatasets.push(newDataset);
+        try{
+          const commitActivity = await fetchCommitActivity(repo.full_name);
+          console.log(commitActivity);
+          if (Array.isArray(commitActivity)) { // Check if commitActivity is an array
+            const newDataset = processCommitData(commitActivity, repo);
+            newDatasets.push(newDataset);
+          } else {
+            console.warn('Commit activity data is not an array for repo:', repo.full_name);
+            // Handle the case where commitActivity is not an array
+            // You might choose to push a default dataset or skip this repo
+          }
+        } catch (error) {
+          console.error("Error fetching commit activity for repo:", repo.full_name, error);
+          // Handle errors in fetching commit activity
+        }  
       }
 
-      // Assuming all repositories have commit data for the same 52 weeks
-      const labels = newDatasets[0]?.data.map((_, index) => `Week ${index + 1}`);
-
-      setChartData({
-        labels,
-        datasets: newDatasets
-      });
+      if (newDatasets.length > 0) {
+        const labels = newDatasets[0].data.map((_, index) => `Week ${index + 1}`);
+        setChartData({
+          labels,
+          datasets: newDatasets
+        });
+      } else {
+        // Handle the case where no valid datasets were created
+        setChartData({
+          labels: [],
+          datasets: []
+        });
+      }
     };
 
     updateChartData();
@@ -69,14 +86,16 @@ const RepoGraph = ({ selectedRepos }) => {
         title: {
           display: true,
           text: 'Week'
-        }
+        },
+        position: 'bottom',
       },
       y: {
         display: true,
         title: {
           display: true,
           text: 'Commits'
-        }
+        },
+        
       }
     }
   };

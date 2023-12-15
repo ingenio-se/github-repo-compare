@@ -123,7 +123,7 @@ position: fixed; /* Fixed position */
     color: white; /* White text color */
     font-size: 0.9rem; /* Smaller font size */
     display: flex; /* Use flexbox for layout */
-    align-items: center; /* Center items vertically */
+   /* align-items: center; /* Center items vertically */
     justify-content: space-between; /* Space out the name and the graph */
     position: relative;
     margin: 20px;
