@@ -18,7 +18,7 @@ export const searchRepositories = async (searchTerm) => {
 export const fetchCommitActivity = async (fullName) => {
     const oneYearAgo = new Date();
     oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-    const response = await fetch(`https://api.github.com/repos/${fullName}/stats/commit_activity`, { headers });
+    const response = await fetch(`${API_BASE_URL}/repos/${fullName}/stats/commit_activity`, { headers });
     
     if (!response.ok) {
       throw new Error('GitHub API responded with an error: ' + response.statusText);
@@ -27,70 +27,45 @@ export const fetchCommitActivity = async (fullName) => {
     const commitActivity = await response.json();
     return commitActivity; // This will return an array of commit activity for the last year
   };
-/*
-export const getCommitActivity = async (owner, repo) => {
-  const response = await fetch(`${API_BASE_URL}/repos/${owner}/${repo}/stats/commit_activity`, { headers });
-  if (!response.ok) {
-    throw new Error(`GitHub API responded with status ${response.status}`);
+  
+
+  // Function to fetch the latest issues of a repository
+  async function fetchLatestIssues(fullName) {
+    const issuesResponse = await fetch(`${API_BASE_URL}/repos/${fullName}/issues?state=open`, { headers });
+    if (!issuesResponse.ok) {
+      throw new Error(`Error fetching issues: ${issuesResponse.statusText}`);
+    }
+    return await issuesResponse.json();
   }
-  return response.json();
-};
-// Function to fetch commit activity for a given repository
-export const fetchCommitActivity = async (fullName) => {
-    const oneYearAgo = new Date();
-    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
   
+  // Function to fetch comments for a given issue in a repository
+  async function fetchCommentsForIssue(fullName, issueNumber) {
+    const commentsResponse = await fetch(`${API_BASE_URL}/repos/${fullName}/issues/${issueNumber}/comments`, { headers });
+    if (!commentsResponse.ok) {
+      throw new Error(`Error fetching comments: ${commentsResponse.statusText}`);
+    }
+    return await commentsResponse.json();
+  }
+  
+  // Main function to fetch comments for the latest issues of a repository
+  export const fetchCommentsForRepo = async (fullName) => {
+    
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/repos/${fullName}/commits?since=${oneYearAgo.toISOString()}`,
-        {
-          headers: {
-            'Authorization': `token ${GITHUB_TOKEN}`,
-            'Accept': 'application/vnd.github.v3+json',
-          },
-        }
-      );
+      const issues = await fetchLatestIssues(fullName);
   
-      if (!response.ok) {
-        throw new Error(`GitHub API responded with status ${response.status}`);
+      // Limit the number of issues to process to avoid hitting API rate limits
+      const limitedIssues = issues.slice(0, 5); // Adjust the number as needed
+  
+      let allComments = [];
+      for (const issue of limitedIssues) {
+        const comments = await fetchCommentsForIssue(fullName, issue.number);
+        allComments = allComments.concat(comments.map(comment => comment.body));
       }
   
-      const commits = await response.json();
-     
-      return processCommits(commits);
+      return allComments.join(' ');
     } catch (error) {
-      console.error('Error fetching commit activity:', error);
-      throw error; // Re-throw the error to handle it in the component
+      console.error("Error in fetchCommentsForRepo:", error);
+      return '';
     }
   };
   
-  // Function to process raw commit data into weekly activity
-  const processCommits = (commits) => {
-    // Initialize a map to count commits per week
-    const commitsPerWeek = new Map();
-  
-    for (const commit of commits) {
-      const weekStart = getWeekStart(new Date(commit.commit.author.date));
-      commitsPerWeek.set(weekStart, (commitsPerWeek.get(weekStart) || 0) + 1);
-    }
-  
-    // Convert the map into an array of data points
-    const commitData = Array.from(commitsPerWeek, ([weekStart, count]) => ({
-      weekStart,
-      count
-    }));
-  
-    // Sort by date, just in case
-    commitData.sort((a, b) => new Date(a.weekStart) - new Date(b.weekStart));
-  
-    return commitData;
-  };
-  
-  // Helper function to get the start of the week (Sunday) for a given date
-  const getWeekStart = (date) => {
-    const weekStart = new Date(date);
-    weekStart.setHours(0, 0, 0, 0);
-    weekStart.setDate(weekStart.getDate() - weekStart.getDay());
-    return weekStart.toISOString().split('T')[0]; // Return date string in YYYY-MM-DD format
-  };
-  */

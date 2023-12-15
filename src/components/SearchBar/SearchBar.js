@@ -4,9 +4,10 @@ import { Search as SearchIcon } from 'react-feather';
 import { Trash } from 'react-feather';
 import { searchRepositories } from '../../api/apiClient';
 import { fetchCommitActivity } from '../../api/apiClient';
+import { fetchCommentsForRepo } from '../../api/apiClient';
 import RepoGraph from '../RepoGraph/RepoGraph'; 
 import { formatDistanceToNow, parseISO } from 'date-fns';
-
+import { analyzeSentiment } from '../../api/sentimentService';
 const formatTimeAgo = (dateString) => {
     return formatDistanceToNow(parseISO(dateString), { addSuffix: true });
   };
@@ -46,13 +47,18 @@ const handleSuggestionClick = async (repo) => {
   if (!selectedRepos.find((selectedRepo) => selectedRepo.id === repo.id)) {
     try {
         const commitActivity = await fetchCommitActivity(repo.full_name);
+        const commentsText = await fetchCommentsForRepo(repo.full_name); // Implement this function
+        console.log('Comments:', commentsText);
+        const sentimentScore = await analyzeSentiment(commentsText); // Implement this function.
+        console.log('sentimentScore:',sentimentScore);
         // Assuming commitActivity is an array of 52 weeks of activity
-        const repoWithColor = {
+        const repoWithDetails = {
           ...repo,
           commitActivity,
-          color: generateRandomColor() // Add a random color
+          color: generateRandomColor(), // Add a random color
+          sentiment : sentimentScore
         };
-        setSelectedRepos(prevRepos => [...selectedRepos, repoWithColor]);
+        setSelectedRepos(prevRepos => [...selectedRepos, repoWithDetails]);
       } catch (error) {
         console.error("Error fetching commit activity:", error);
       }
@@ -126,8 +132,10 @@ const handleSuggestionClick = async (repo) => {
              <div className="repo-details">
                 <span>{renderSuggestionItem(repo.full_name)}</span>
                 <span className="repo-stars">
-                ⭐ {repo.stargazers_count} Updated {formatTimeAgo(repo.updated_at)}
+                ⭐ {repo.stargazers_count} Updated {formatTimeAgo(repo.updated_at)} - 
+      
                 </span>
+                {repo.sentiment > 0 ? '😊' : repo.sentiment < 0 ? '😟' : '😐'}
             </div>
             <button className="remove-repo-button" onClick={() => handleRemoveRepo(repo.id)}>
             <Trash size={16} />
