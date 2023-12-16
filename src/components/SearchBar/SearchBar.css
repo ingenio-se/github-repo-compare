@@ -1,179 +1,188 @@
+/* Main container for the search interface, positioned fixed to the screen's top-right corner */
 .search-interface {
-position: fixed; /* Fixed position */
-  top: 0; /* Start at the top of the screen */
-  right: 0; /* Align to the right */
-  height: 100vh; /* Full viewport height */
-  width: 30%; /* 30% of the viewport width */
-  background-color: #37374A; /* Assuming a dark background as in the image */
-  color: white;
-  font-family: 'Arial', sans-serif;
-  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2); /* Shadow to the left */
-  z-index: 1000; /* Ensure it's above other content */
-  }
-  
-  .search-box {
-    position: relative; 
-    margin: 20px;
-    display: flex;
-    flex-direction: row;
-    background-color: #222; /* Darker box for input and button */
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .search-box input {
-    flex-grow: 1;
-    border: none;
-    background-color:white; /* Same as the search box for a seamless look */
-    color:#8383AF; /* White text color */
-    padding: 15px 20px; /* Increased padding for more height */
-    font-size: 16px; /* Optional: Adjust font size if needed */
-    width: calc(100% - 40px); /* Subtract double the padding */
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-    outline: none; /* Remove the outline 
-  }
-  
-  .search-box input::placeholder {
-    color: #555; /* Lighter text for placeholder */
-  }
-  
-  .search-box .search-button {
-    background: white;
-    border: none;
-    padding: 0 15px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .search-button:hover {
-    background-color: #444; /* Slightly lighter background on hover */
-  }
-  
-  .search-prompt {
-    background-color: #242432; /* Match the background color to the darker tone in the image */
-    color: #BCBCF2; /* White color for the text */
-    text-align: center; /* Center the text */
-    padding: 40px; /* Add padding for spacing */
-    border-radius: 10px; /* Rounded corners as seen in the image */
-    display: flex; /* Use flexbox to align items */
-    flex-direction: column; /* Stack items vertically */
-    align-items: center; 
-    gap: 10px; /* Space between icon and text */
-    margin: 20px; /* Add some margin around the prompt */
-    font-size: 16px; /* Adjust font-size as needed */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-    max-width: 400px; /* Maximum width of the element */
-    margin-left: auto; /* Align to the right */
-    margin-right: auto; /* Align to the right */
-    border-radius: 16px;
-    margin: 20px;
-  }
-  
-  /* Adjustments for the search icon size and color can be made here */
-  .search-button svg {
-    color: #8383AF; /* Set the color of the icon */
-    stroke-width: 1.5; /* Adjust the stroke width as needed */
-  }
-  .suggestions-list {
-    list-style-type: none;
-    padding-left: 0;
-    margin-top:50px;
-    position: absolute;
-    width: 100%;
-    background-color: white;
-    border: 1px solid #ddd; /* Light grey border */
-    border-top: none; /* Remove border from the top edge */
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Subtle shadow for depth */
-    border-radius: 0 0 4px 4px; /* Rounded corners on the bottom */
-    max-height: 300px; /* Limit the height of the dropdown */
-    overflow-y: auto; /* Enable scrolling for overflow */
-    z-index: 5; /* Ensure the list appears above other content */
-  }
-  
-  /* Add styles for each suggestion item */
-  .suggestion-item {
-    padding: 10px 15px;
-    /*border-bottom: 1px solid #ddd; /* Light grey border between items */
-    cursor: pointer; /* Pointer to indicate clickable items */
-    color:#8383AF;
-  }
-  
-  .suggestion-item:last-child {
-    border-bottom: none; /* Remove border from the last item */
-  }
-  /* Styles for selected repositories */
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh; /* Full height of the viewport */
+  width: 30%; /* Width set to 30% of the viewport */
+  background-color: #37374A; /* Dark background color */
+  color: white; /* Text color set to white */
+  font-family: 'Arial', sans-serif; /* Font family for the text */
+  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2); /* Shadow effect on the left side */
+  z-index: 1000; /* Ensures the interface is above other content */
+}
 
-  
-  .selected-repos {
-    margin-top: 20px; /* Add some space above the list */
-  }
-  
-  /* Styles for each selected repository */
-  .selected-repo {
-    background: #2d2d2d; /* Dark background */
-    margin-bottom: 10px; /* Space between repo items */
-    padding: 10px; /* Padding inside the repo item */
-    border-left: 4px solid; /* Colored border on the left */
-    border-radius: 4px; /* Rounded corners */
-    color: white; /* White text color */
-    font-size: 0.9rem; /* Smaller font size */
-    display: flex; /* Use flexbox for layout */
-   /* align-items: center; /* Center items vertically */
-    justify-content: space-between; /* Space out the name and the graph */
-    position: relative;
-    margin: 20px;
-    display: flex; /* Use flexbox for layout */
-    flex-direction: column; /* Stack children vertically */
-    gap: 5px;
-    transition: background-color 0.3s; 
-  }
-  .selected-repo .repo-details {
-    display: flex;
-    flex-direction: column; /* Stack name and stars/info on top of each other */
-    gap: 5px; /* Space between name and stars/info */
-  }
-  .selected-repo:hover {
-    background-color: #3d3d3d; /* Slightly lighter background on hover */
-  }
-  
-  /* Style for the repository name and details */
-  .selected-repo span {
-    display: block; /* Make the span fill the line */
-    margin-right: 10px; /* Space between the text and the graph */
-  }
-  .repo-stars {
-    font-size: 0.8rem; /* Smaller font size */
-    color: #888; /* Example color - choose what fits your design */
-    display: flex;
-    align-items: center; /* Center the star icon and text vertically */
-  }
-  .remove-repo-button {
-    position: absolute;
+/* Styling for the search box container */
+.search-box {
+  position: relative;
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  background-color: #222; /* Dark background for the search box */
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Styling for the search input field */
+.search-box input {
+  flex-grow: 1;
+  border: none;
+  background-color: white; /* White background for seamless integration */
+  color: #8383AF; /* Light purple text color */
+  padding: 15px 20px; /* Padding for larger touch area */
+  font-size: 16px;
+  width: calc(100% - 40px); /* Width calculation to respect padding */
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  outline: none; /* Removes the default outline */
+}
+
+/* Placeholder style for the search input */
+.search-box input::placeholder {
+  color: #555; /* Light grey color for the placeholder text */
+}
+
+/* Styling for the search button */
+.search-box .search-button {
+  background: white;
+  border: none;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+}
+
+/* Hover effect for the search button */
+.search-button:hover {
+  background-color: #444; /* Darker background on hover */
+}
+
+/* Styling for the search prompt text */
+.search-prompt {
+  background-color: #242432; /* Match the background color to the darker tone in the image */
+  color: #BCBCF2; /* White color for the text */
+  text-align: center; /* Center the text */
+  padding: 40px; /* Add padding for spacing */
+  border-radius: 10px; /* Rounded corners as seen in the image */
+  display: flex; /* Use flexbox to align items */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; 
+  gap: 10px; /* Space between icon and text */
+  font-size: 16px; /* Adjust font-size as needed */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  max-width: 400px; /* Maximum width of the element */
+  margin-left: auto; /* Align to the right */
+  margin-right: auto; /* Align to the right */
+  border-radius: 16px;
+  margin: 20px;
+}
+
+/* Style adjustments for the search icon */
+.search-button svg {
+  color: #8383AF;
+  stroke-width: 1.5;
+}
+
+/* Styling for the suggestions list */
+.suggestions-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 50px;
+  position: absolute;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 4px 4px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 5;
+}
+
+/* Styling for individual suggestion items */
+.suggestion-item {
+  padding: 10px 15px;
+  cursor: pointer;
+  color: #8383AF;
+}
+
+/* Removes the border from the last suggestion item */
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+/* Style block for selected repositories list */
+.selected-repos {
+  margin-top: 20px;
+}
+
+/* Styling for each selected repository */
+.selected-repo {
+  background: #2d2d2d;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-left: 4px solid;
+  border-radius: 4px;
+  color: white;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  position: relative;
+  margin: 20px;
+}
+
+/* Details block for each repository */
+.selected-repo .repo-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Hover effect for repository items */
+.selected-repo:hover {
+  background-color: #3d3d3d;
+}
+
+/* Styling for repository name and details */
+.selected-repo span {
+  display: block;
+  margin-right: 10px;
+}
+
+/* Styling for repository stars and last updated information */
+.repo-stars {
+  font-size: 0.8rem;
+  color: #888;
+  display: flex;
+  align-items: center;
+}
+
+/* Styles for the remove repository button */
+.remove-repo-button {
+  position: absolute;
   top: 50%;
-  right: 10px; /* Position the button to the right */
-  transform: translateY(-50%); /* Center the button vertically */
+  right: 10px;
+  transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
   color: white;
-  display: flex; /* Ensure the button uses flexbox for centering */
-  align-items: center; /* Center the icon vertically */
-  justify-content: center; /* Center the icon horizontally */
-  }
-  
-  /* Hide the button until the repo is hovered */
-  .remove-repo-button {
-    display: none;
-  }
-  
-  .selected-repo:hover .remove-repo-button {
-    display: flex; /* Show the button on hover */
-  }
-  .remove-repo-button svg {
-    z-index: 2;
-  }
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Show remove button on hover over the repository item */
+.selected-repo:hover .remove-repo-button {
+  display: flex;
+}
+
+/* Style for the SVG icon in the remove button */
+.remove-repo-button svg {
+  z-index: 2;
+}

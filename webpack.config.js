@@ -1,10 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-require('dotenv').config();
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+require('dotenv').config();
 
 module.exports = {
   mode: 'production',
@@ -32,7 +32,6 @@ module.exports = {
         'process.env.REACT_APP_GITHUB_TOKEN': JSON.stringify(process.env.REACT_APP_GITHUB_TOKEN),
       }),
   ],
-  
   module: {
     rules: [
       {
@@ -57,8 +56,7 @@ module.exports = {
     },
     compress: true,
     port: 3000,
-    open: true, // Add this line
+    open: true, 
   },
   
- 
 };
