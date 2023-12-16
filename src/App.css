@@ -1,41 +1,38 @@
-/* App.css - Main layout styles */
+/* App.css - Defines the main layout and styling for the application */
 
+/* Container for the entire application, centered with a maximum width */
 .app-container {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
-  max-width: 1200px; /* or whatever max width you prefer */
-  margin: auto;
+  max-width: 1200px; /* Adjust maximum width as needed */
+  margin: auto; /* Center the container */
 }
 
+/* Container for the graph component */
 .graph-container {
-  flex: 2; /* Graph takes more space */
-  height: 400px; /* Fixed height, or based on your preference */
-  position: relative; /* For tooltip positioning, if needed */
+  flex: 2; /* Allocates more space to the graph container */
+  height: 400px; /* Set a fixed height for the graph */
+  position: relative; /* Useful for absolute positioning of child elements */
 }
 
+/* General styling for the App component */
 .App {
-  text-align: center;
+  text-align: center; /* Centers text within the App component */
 }
 
-
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
+/* Header styling within the App */
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #282c34; /* Dark background color */
+  min-height: 100vh; /* Minimum height to cover the viewport height */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-size: calc(10px + 2vmin); /* Responsive font size */
+  color: white; /* Text color */
 }
+
 
 
