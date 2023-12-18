@@ -14,9 +14,9 @@ Learning Framework: 2 hours - Refreshing knowledge on React and familiarizing wi
 
 Coding: 3 hours - Writing the main functionalities, including API integration and UI components.
 
-Debugging: 2 hours - Fixing issues related to API data handling, especially around the sentiment analysis integration and asynchronous data fetching.
+Debugging: 2 hours - Fixing issues related to API data handling, webpack, exceptions , the sentiment analysis integration and asynchronous data fetching.
 
-Design and Refinement: 1 hours - Adjusting the UI and ensuring a user-friendly experience.
+Design and Refinement and Docs: 1 hours - Adjusting the UI and ensuring a user-friendly experience, documentation and and PRE POST answers
 
 ## If you could go back and give yourself advice at the beginning of the project, what would it be?
 
@@ -40,10 +40,12 @@ This assignment effectively showcased my abilities in React development, API int
 
 ## Are there any significant web development-related skills that you possess that were not demonstrated in this exercise? If so, what are they?
 
-Backend Development: Experience with server-side technologies like Node.js, Express.js, and database management, which was not required for this frontend-focused assignment.
+Backend Development: Experience with server-side technologies, database management, DevOps, which was not required for this frontend-focused assignment.
 
 Advanced State Management: Skills in managing complex application states using tools like Redux or Context API, which weren't necessary for the scope of this project.
 
 Responsive Web Design: Although the project is responsive, it didn't fully demonstrate my skills in building highly responsive and mobile-first web designs.
 
 Authentication and Security: Knowledge in implementing user authentication and maintaining web security, which were not part of this project’s requirements.
+
+AI/ML services : Implement and design different tools in machine learning, supervised learning, unsupervised learning, deep learning, computer vision and NLP.
